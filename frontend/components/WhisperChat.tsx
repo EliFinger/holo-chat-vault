@@ -32,7 +32,6 @@ export default function WhisperChat() {
 
   const [messageInput, setMessageInput] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [sendError, setSendError] = useState<string | null>(null);
   const [encryptionEnabled, setEncryptionEnabled] = useState(true);
   
