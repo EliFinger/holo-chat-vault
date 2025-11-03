@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* WhisperLink Design System - Deep Space Theme with Electric Cyan Accents */
+
+@layer base {
+  :root {
+    /* Deep space backgrounds */
+    --background: 230 35% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 30% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 30% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Electric cyan primary */
+    --primary: 189 97% 55%;
+    --primary-foreground: 230 35% 7%;
+
+    /* Message bubbles */
+    --secondary: 230 25% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 230 20% 20%;
+    --muted-foreground: 215 20% 65%;
+
+    /* Encryption glow accent */
+    --accent: 189 97% 55%;
+    --accent-foreground: 230 35% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 25% 20%;
+    --input: 230 25% 15%;
+    --ring: 189 97% 55%;
+
+    --radius: 1rem;
+
+    /* Custom encryption states */
+    --encryption-glow: 189 97% 55%;
+    --encryption-locked: 142 71% 45%;
+    --encryption-unlocked: 189 97% 55%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(189 97% 55% / 0.2), hsl(230 35% 7%));
+    --gradient-message: linear-gradient(135deg, hsl(230 25% 15%), hsl(230 30% 12%));
+    
+    /* Glow effects */
+    --glow-encryption: 0 0 20px hsl(189 97% 55% / 0.5);
+    --glow-subtle: 0 0 10px hsl(189 97% 55% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px hsl(var(--encryption-glow) / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--encryption-glow) / 0.8);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.shadow-glow {
+  box-shadow: var(--glow-encryption);
+}
+
+.shadow-glow-subtle {
+  box-shadow: var(--glow-subtle);
+}
