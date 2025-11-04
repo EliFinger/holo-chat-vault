@@ -183,7 +183,13 @@ export function useWhisperVault() {
         // Demo mode - use local storage
         const stored = localStorage.getItem(`whisperlink-${address}`);
         if (stored) {
-          setMessages(JSON.parse(stored));
+          try {
+            setMessages(JSON.parse(stored));
+          } catch (parseErr) {
+            console.error("Failed to parse stored messages:", parseErr);
+            localStorage.removeItem(`whisperlink-${address}`);
+            setMessages([]);
+          }
         }
         return;
       }
@@ -206,11 +212,25 @@ export function useWhisperVault() {
 
       setMessages(loadedMessages);
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
       console.error("Failed to load messages:", err);
+      
+      // Check for specific contract errors
+      if (errorMessage.includes("missing revert data") || errorMessage.includes("CALL_EXCEPTION")) {
+        setError("Contract not available on this network. Please check your connection.");
+      } else {
+        setError(`Failed to load messages: ${errorMessage}`);
+      }
+      
       // Fallback to local storage
       const stored = localStorage.getItem(`whisperlink-${address}`);
       if (stored) {
-        setMessages(JSON.parse(stored));
+        try {
+          setMessages(JSON.parse(stored));
+        } catch (parseErr) {
+          console.error("Failed to parse stored messages:", parseErr);
+          setMessages([]);
+        }
       }
     } finally {
       setLoading(false);
