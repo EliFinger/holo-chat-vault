@@ -124,13 +124,32 @@ export const ${CONTRACT_NAME}Addresses = {
 };
 `;
 
+// Generate dynamic deployments.json for runtime fetching
+const deploymentsJson = {
+  [CONTRACT_NAME]: {
+    "31337": { address: deployLocalhost.address, chainId: 31337, chainName: "hardhat" },
+    "11155111": { address: deploySepolia.address, chainId: 11155111, chainName: "sepolia" },
+  }
+};
+
+const publicDir = path.resolve("./public");
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
 console.log(`Generated ${path.join(outdir, `${CONTRACT_NAME}ABI.ts`)}`);
 console.log(`Generated ${path.join(outdir, `${CONTRACT_NAME}Addresses.ts`)}`);
+console.log(`Generated ${path.join(publicDir, 'deployments.json')}`);
 console.log(tsAddresses);
 
 fs.writeFileSync(path.join(outdir, `${CONTRACT_NAME}ABI.ts`), tsCode, "utf-8");
 fs.writeFileSync(
   path.join(outdir, `${CONTRACT_NAME}Addresses.ts`),
   tsAddresses,
+  "utf-8"
+);
+fs.writeFileSync(
+  path.join(publicDir, 'deployments.json'),
+  JSON.stringify(deploymentsJson, null, 2),
   "utf-8"
 );

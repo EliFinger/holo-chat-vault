@@ -2,8 +2,22 @@ import { useState, useCallback } from "react";
 import { useAccount, useChainId, useWalletClient } from "wagmi";
 import { BrowserProvider, Contract, ZeroAddress } from "ethers";
 
-// Import auto-generated contract addresses
-import { WhisperVaultAddresses } from "@/abi/WhisperVaultAddresses";
+// Dynamic deployment addresses cache
+let deploymentCache: Record<string, { address: string; chainId: number; chainName: string }> | null = null;
+
+async function fetchDeployments(): Promise<Record<string, { address: string; chainId: number; chainName: string }>> {
+  if (deploymentCache) return deploymentCache;
+  
+  try {
+    const response = await fetch('/deployments.json');
+    const data = await response.json();
+    deploymentCache = data.WhisperVault || {};
+    return deploymentCache as Record<string, { address: string; chainId: number; chainName: string }>;
+  } catch (error) {
+    console.error('[WhisperVault] Failed to fetch deployments:', error);
+    return {};
+  }
+}
 
 // Contract ABI - simplified for core messaging functions
 const WHISPER_VAULT_ABI = [
@@ -20,13 +34,14 @@ const WHISPER_VAULT_ABI = [
 ];
 
 /**
- * Get WhisperVault contract address for the given chainId
+ * Get WhisperVault contract address for the given chainId (async)
  */
-function getContractAddress(chainId: number | undefined): string | null {
+async function getContractAddress(chainId: number | undefined): Promise<string | null> {
   if (!chainId) return null;
   
-  const entry = WhisperVaultAddresses[chainId.toString() as keyof typeof WhisperVaultAddresses];
-  if (!entry || !("address" in entry) || entry.address === ZeroAddress || entry.address === "0x0000000000000000000000000000000000000000") {
+  const deployments = await fetchDeployments();
+  const entry = deployments[chainId.toString()];
+  if (!entry || !entry.address || entry.address === ZeroAddress || entry.address === "0x0000000000000000000000000000000000000000") {
     return null;
   }
   
@@ -142,7 +157,7 @@ export function useWhisperVault() {
   const getContract = useCallback(async () => {
     if (!walletClient || !chainId) return null;
 
-    const contractAddress = getContractAddress(chainId);
+    const contractAddress = await getContractAddress(chainId);
     if (!contractAddress) {
       console.warn(`No contract deployed on chain ${chainId}. Using demo mode with localStorage.`);
       return null;
