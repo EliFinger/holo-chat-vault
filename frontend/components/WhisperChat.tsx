@@ -94,9 +94,16 @@ export default function WhisperChat() {
     }
   }, [authPassword, address, signMessageAsync]);
 
+  const MAX_MESSAGE_LENGTH = 500;
+  
   const handleSend = async () => {
     if (!messageInput.trim() || !password.trim()) {
       setSendError("Please enter both message and password");
+      return;
+    }
+    
+    if (messageInput.length > MAX_MESSAGE_LENGTH) {
+      setSendError(`Message too long. Maximum ${MAX_MESSAGE_LENGTH} characters allowed.`);
       return;
     }
 
@@ -472,9 +479,14 @@ export default function WhisperChat() {
                     Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
                   </span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Shield className="w-3 h-3" />
-                  <span>End-to-end encrypted</span>
+                <div className="flex items-center gap-4">
+                  <span className={messageInput.length > MAX_MESSAGE_LENGTH ? "text-[hsl(0,84%,60%)]" : ""}>
+                    {messageInput.length}/{MAX_MESSAGE_LENGTH}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <Shield className="w-3 h-3" />
+                    <span>End-to-end encrypted</span>
+                  </div>
                 </div>
               </div>
             </div>
