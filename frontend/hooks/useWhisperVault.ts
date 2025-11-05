@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useAccount, useChainId, useWalletClient } from "wagmi";
 import { BrowserProvider, Contract, ZeroAddress } from "ethers";
+import { encryptText, decryptText } from "./useCrypto";
 
 // Dynamic deployment addresses cache
 let deploymentCache: Record<string, { address: string; chainId: number; chainName: string }> | null = null;
@@ -55,88 +56,6 @@ export interface Message {
   timestamp: number;
   isResponse: boolean;
   decryptedText?: string;
-}
-
-// Simple client-side encryption using Web Crypto API
-async function deriveKey(password: string): Promise<CryptoKey> {
-  const encoder = new TextEncoder();
-  const passwordBuffer = encoder.encode(password);
-
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    passwordBuffer,
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
-
-  return crypto.subtle.deriveKey(
-    {
-      name: "PBKDF2",
-      salt: encoder.encode("whisperlink-salt"),
-      iterations: 100000,
-      hash: "SHA-256",
-    },
-    keyMaterial,
-    { name: "AES-GCM", length: 256 },
-    false,
-    ["encrypt", "decrypt"]
-  );
-}
-
-async function encryptText(text: string, password: string): Promise<string> {
-  const key = await deriveKey(password);
-  const encoder = new TextEncoder();
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    key,
-    encoder.encode(text)
-  );
-
-  // Combine IV and encrypted data
-  const combined = new Uint8Array(iv.length + encrypted.byteLength);
-  combined.set(iv);
-  combined.set(new Uint8Array(encrypted), iv.length);
-
-  return Array.from(combined)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-async function decryptText(encryptedHex: string, password: string): Promise<string> {
-  // Remove 0x prefix if present
-  const cleanHex = encryptedHex.startsWith("0x") ? encryptedHex.slice(2) : encryptedHex;
-  
-  if (!cleanHex || cleanHex.length < 24) {
-    throw new Error("Invalid encrypted content: data too short");
-  }
-  
-  // Validate hex format
-  if (!/^[0-9a-fA-F]+$/.test(cleanHex)) {
-    throw new Error("Invalid encrypted content: not valid hex format");
-  }
-  
-  const key = await deriveKey(password);
-  const combined = new Uint8Array(
-    cleanHex.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
-  );
-
-  const iv = combined.slice(0, 12);
-  const encryptedData = combined.slice(12);
-
-  try {
-    const decrypted = await crypto.subtle.decrypt(
-      { name: "AES-GCM", iv },
-      key,
-      encryptedData
-    );
-    return new TextDecoder().decode(decrypted);
-  } catch (cryptoErr) {
-    // AES-GCM decryption fails when password is wrong (authentication tag mismatch)
-    throw new Error("Decryption failed: incorrect password or corrupted data");
-  }
 }
 
 function generateAutoResponse(userMessage: string): string {
