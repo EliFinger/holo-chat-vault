@@ -43,6 +43,23 @@ export default function WhisperChat() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   
   const { signMessageAsync } = useSignMessage();
+  
+  // Password strength calculation
+  const getPasswordStrength = (pwd: string): { level: number; label: string; color: string } => {
+    if (!pwd) return { level: 0, label: "", color: "" };
+    let score = 0;
+    if (pwd.length >= 6) score++;
+    if (pwd.length >= 10) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+    
+    if (score <= 2) return { level: 1, label: "Weak", color: "hsl(0,84%,60%)" };
+    if (score <= 3) return { level: 2, label: "Medium", color: "hsl(45,93%,47%)" };
+    return { level: 3, label: "Strong", color: "hsl(142,71%,45%)" };
+  };
+  
+  const passwordStrength = getPasswordStrength(authPassword);
 
   // Reset authentication when wallet disconnects
   useEffect(() => {
@@ -301,9 +318,29 @@ export default function WhisperChat() {
                       </button>
                     </div>
 
+                    {/* Password Strength Indicator */}
+                    {authPassword && (
+                      <div className="space-y-1">
+                        <div className="flex gap-1">
+                          {[1, 2, 3].map((level) => (
+                            <div
+                              key={level}
+                              className="h-1 flex-1 rounded-full transition-colors"
+                              style={{
+                                backgroundColor: passwordStrength.level >= level ? passwordStrength.color : "hsl(230,25%,20%)"
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <p className="text-xs text-right" style={{ color: passwordStrength.color }}>
+                          {passwordStrength.label}
+                        </p>
+                      </div>
+                    )}
+
                     <button
                       onClick={handleAuthenticate}
-                      disabled={isAuthenticating || !authPassword.trim()}
+                      disabled={isAuthenticating || !authPassword.trim() || authPassword.length < 6}
                       className="w-full py-4 bg-gradient-to-r from-[hsl(189,97%,55%)] to-[hsl(142,71%,45%)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-[hsl(230,35%,7%)] font-bold transition-all shadow-lg shadow-[hsl(189,97%,55%)]/25 flex items-center justify-center gap-2"
                     >
                       {isAuthenticating ? (
