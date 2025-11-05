@@ -110,7 +110,12 @@ async function decryptText(encryptedHex: string, password: string): Promise<stri
   const cleanHex = encryptedHex.startsWith("0x") ? encryptedHex.slice(2) : encryptedHex;
   
   if (!cleanHex || cleanHex.length < 24) {
-    throw new Error("Invalid encrypted content");
+    throw new Error("Invalid encrypted content: data too short");
+  }
+  
+  // Validate hex format
+  if (!/^[0-9a-fA-F]+$/.test(cleanHex)) {
+    throw new Error("Invalid encrypted content: not valid hex format");
   }
   
   const key = await deriveKey(password);
@@ -121,13 +126,17 @@ async function decryptText(encryptedHex: string, password: string): Promise<stri
   const iv = combined.slice(0, 12);
   const encryptedData = combined.slice(12);
 
-  const decrypted = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv },
-    key,
-    encryptedData
-  );
-
-  return new TextDecoder().decode(decrypted);
+  try {
+    const decrypted = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv },
+      key,
+      encryptedData
+    );
+    return new TextDecoder().decode(decrypted);
+  } catch (cryptoErr) {
+    // AES-GCM decryption fails when password is wrong (authentication tag mismatch)
+    throw new Error("Decryption failed: incorrect password or corrupted data");
+  }
 }
 
 function generateAutoResponse(userMessage: string): string {
