@@ -203,21 +203,15 @@ export function useWhisperVault() {
         return;
       }
 
-      const count = await contract.getMessageCount(address);
-      const loadedMessages: Message[] = [];
-
-      for (let i = 0; i < Number(count); i++) {
-        const [sender, timestamp, isResponse] = await contract.getMessageMetadata(address, i);
-        const encryptedContent = await contract.getEncryptedContent(address, i);
-
-        loadedMessages.push({
-          id: i,
-          sender,
-          encryptedContent: encryptedContent as string,
-          timestamp: Number(timestamp),
-          isResponse,
-        });
-      }
+      // Use batch loading for better performance
+      const allMessages = await contract.getAllMessages(address);
+      const loadedMessages: Message[] = allMessages.map((msg: { sender: string; encryptedContent: string; timestamp: bigint; isResponse: boolean }, index: number) => ({
+        id: index,
+        sender: msg.sender,
+        encryptedContent: msg.encryptedContent as string,
+        timestamp: Number(msg.timestamp),
+        isResponse: msg.isResponse,
+      }));
 
       setMessages(loadedMessages);
     } catch (err) {
