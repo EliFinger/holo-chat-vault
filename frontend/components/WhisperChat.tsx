@@ -17,6 +17,7 @@ import {
   EyeOff,
   KeyRound,
   LogIn,
+  LogOut,
 } from "lucide-react";
 
 export default function WhisperChat() {
@@ -60,6 +61,15 @@ export default function WhisperChat() {
   };
   
   const passwordStrength = getPasswordStrength(authPassword);
+
+  // Handle lock vault (logout)
+  const handleLockVault = useCallback(() => {
+    setIsAuthenticated(false);
+    setPassword("");
+    setAuthPassword("");
+    setAuthError(null);
+    setSendError(null);
+  }, []);
 
   // Reset authentication when wallet disconnects
   useEffect(() => {
@@ -381,14 +391,23 @@ export default function WhisperChat() {
                   <Unlock className="w-4 h-4" />
                   <span>Vault unlocked</span>
                 </div>
-                <button
-                  onClick={handleDecryptAll}
-                  disabled={loading || messages.length === 0}
-                  className="px-4 py-2 bg-[hsl(230,25%,15%)] hover:bg-[hsl(230,25%,20%)] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-[hsl(210,40%,98%)] text-sm font-medium transition-all flex items-center gap-2"
-                >
-                  <Unlock className="w-4 h-4" />
-                  <span>Decrypt All</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleDecryptAll}
+                    disabled={loading || messages.length === 0}
+                    className="px-4 py-2 bg-[hsl(230,25%,15%)] hover:bg-[hsl(230,25%,20%)] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-[hsl(210,40%,98%)] text-sm font-medium transition-all flex items-center gap-2"
+                  >
+                    <Unlock className="w-4 h-4" />
+                    <span>Decrypt All</span>
+                  </button>
+                  <button
+                    onClick={handleLockVault}
+                    className="px-4 py-2 bg-[hsl(0,84%,60%)]/10 hover:bg-[hsl(0,84%,60%)]/20 border border-[hsl(0,84%,60%)]/30 rounded-lg text-[hsl(0,84%,60%)] text-sm font-medium transition-all flex items-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Lock</span>
+                  </button>
+                </div>
               </div>
             </div>
 
