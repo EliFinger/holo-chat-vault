@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 export default function WhisperChat() {
-  const { isConnected, address } = useAccount();
+  const { isConnected, address, chainId } = useAccount();
   const {
     messages,
     loading,
@@ -30,6 +30,9 @@ export default function WhisperChat() {
     sendMessage,
     decryptAllMessages,
   } = useWhisperVault();
+  
+  // Track previous chainId for network switch detection
+  const [prevChainId, setPrevChainId] = useState<number | undefined>(undefined);
 
   const [messageInput, setMessageInput] = useState("");
   const [password, setPassword] = useState("");
@@ -79,6 +82,16 @@ export default function WhisperChat() {
       setPassword("");
     }
   }, [isConnected]);
+
+  // Handle network switching - reload messages when chain changes
+  useEffect(() => {
+    if (chainId && prevChainId && chainId !== prevChainId && isAuthenticated) {
+      // Network changed while authenticated, reload messages for new network
+      setSendError(null);
+      loadMessages();
+    }
+    setPrevChainId(chainId);
+  }, [chainId, prevChainId, isAuthenticated, loadMessages]);
 
   // Load messages when authenticated
   useEffect(() => {
