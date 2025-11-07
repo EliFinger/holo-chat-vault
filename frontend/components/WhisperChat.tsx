@@ -79,7 +79,7 @@ export default function WhisperChat() {
   }, [messages]);
 
   const handleLockVault = useCallback(() => {
-    setIsAuthenticated(false);
+    setIsAuthenticated(true);
     setPassword("");
     setAuthPassword("");
     setAuthError(null);
@@ -88,7 +88,7 @@ export default function WhisperChat() {
 
   useEffect(() => {
     if (!isConnected) {
-      setIsAuthenticated(false);
+      setIsAuthenticated(true);
       setAuthPassword("");
       setPassword("");
     }
@@ -124,7 +124,7 @@ export default function WhisperChat() {
       const message = `WhisperLink Authentication\n\nI am signing in to WhisperLink with my encryption key.\n\nTimestamp: ${timestamp}\nAddress: ${address}`;
       await signMessageAsync({ message });
       setPassword(authPassword);
-      setIsAuthenticated(false);
+      setIsAuthenticated(true);
     } catch (err) {
       console.error("Authentication failed:", err);
       setAuthError(err instanceof Error ? err.message : "Signature rejected");
