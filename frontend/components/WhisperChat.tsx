@@ -45,6 +45,7 @@ export default function WhisperChat() {
   const [showAuthPassword, setShowAuthPassword] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   
   const { signMessageAsync } = useSignMessage();
   
@@ -137,6 +138,9 @@ export default function WhisperChat() {
   const MAX_MESSAGE_LENGTH = 500;
   
   const handleSend = async () => {
+    // Prevent double submission
+    if (isSending) return;
+    
     if (!messageInput.trim() || !password.trim()) {
       setSendError("Please enter both message and password");
       return;
@@ -148,11 +152,14 @@ export default function WhisperChat() {
     }
 
     try {
+      setIsSending(true);
       setSendError(null);
       await sendMessage(messageInput, password);
       setMessageInput("");
     } catch (err) {
       setSendError(err instanceof Error ? err.message : "Failed to send");
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -545,10 +552,10 @@ export default function WhisperChat() {
                 </div>
                 <button
                   onClick={handleSend}
-                  disabled={loading || !messageInput.trim()}
+                  disabled={loading || isSending || !messageInput.trim()}
                   className="p-3 bg-[hsl(189,97%,55%)] hover:bg-[hsl(189,97%,55%)]/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-[hsl(230,35%,7%)] transition-all shadow-lg shadow-[hsl(189,97%,55%)]/25 hover:shadow-[hsl(189,97%,55%)]/40"
                 >
-                  {loading ? (
+                  {(loading || isSending) ? (
                     <div className="w-5 h-5 border-2 border-[hsl(230,35%,7%)]/30 border-t-[hsl(230,35%,7%)] rounded-full animate-spin" />
                   ) : (
                     <Send className="w-5 h-5" />
