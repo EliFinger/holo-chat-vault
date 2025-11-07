@@ -18,6 +18,8 @@ import {
   KeyRound,
   LogIn,
   LogOut,
+  Copy,
+  Check,
 } from "lucide-react";
 
 export default function WhisperChat() {
@@ -46,6 +48,7 @@ export default function WhisperChat() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
   
   const { signMessageAsync } = useSignMessage();
   
@@ -203,6 +206,16 @@ export default function WhisperChat() {
   const truncateHex = (hex: string) => {
     if (hex.length <= 24) return hex;
     return hex.slice(0, 12) + "..." + hex.slice(-10);
+  };
+
+  const handleCopyContent = async (id: number, content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
   return (
@@ -483,7 +496,7 @@ export default function WhisperChat() {
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className={`flex ${msg.isResponse ? "justify-start" : "justify-end"}`}
+                      className={`flex group ${msg.isResponse ? "justify-start" : "justify-end"}`}
                     >
                       <div
                         className={`max-w-[80%] rounded-2xl px-4 py-3 ${
@@ -495,13 +508,37 @@ export default function WhisperChat() {
                         {/* Message Content */}
                         <div className="space-y-1">
                           {msg.decryptedText ? (
-                            <p className="text-sm">{msg.decryptedText}</p>
+                            <div className="flex items-start gap-2">
+                              <p className="text-sm flex-1">{msg.decryptedText}</p>
+                              <button
+                                onClick={() => handleCopyContent(msg.id, msg.decryptedText || "")}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-white/10 rounded"
+                                title="Copy message"
+                              >
+                                {copiedId === msg.id ? (
+                                  <Check className="w-3 h-3 text-[hsl(142,71%,45%)]" />
+                                ) : (
+                                  <Copy className="w-3 h-3 opacity-60" />
+                                )}
+                              </button>
+                            </div>
                           ) : (
                             <div className="flex items-center gap-2">
                               <Lock className="w-3 h-3 opacity-60" />
-                              <p className="font-mono text-xs opacity-70 break-all">
+                              <p className="font-mono text-xs opacity-70 break-all flex-1">
                                 {truncateHex(msg.encryptedContent)}
                               </p>
+                              <button
+                                onClick={() => handleCopyContent(msg.id, msg.encryptedContent)}
+                                className="opacity-60 hover:opacity-100 transition-opacity p-1 hover:bg-white/10 rounded"
+                                title="Copy encrypted content"
+                              >
+                                {copiedId === msg.id ? (
+                                  <Check className="w-3 h-3 text-[hsl(142,71%,45%)]" />
+                                ) : (
+                                  <Copy className="w-3 h-3" />
+                                )}
+                              </button>
                             </div>
                           )}
 
