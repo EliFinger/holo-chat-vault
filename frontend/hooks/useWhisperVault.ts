@@ -5,19 +5,39 @@ import { encryptText, decryptText } from "./useCrypto";
 
 // Dynamic deployment addresses cache
 let deploymentCache: Record<string, { address: string; chainId: number; chainName: string }> | null = null;
+let deploymentFetchPromise: Promise<Record<string, { address: string; chainId: number; chainName: string }>> | null = null;
 
 async function fetchDeployments(): Promise<Record<string, { address: string; chainId: number; chainName: string }>> {
+  // Return cached data if available
   if (deploymentCache) return deploymentCache;
   
-  try {
-    const response = await fetch('/deployments.json');
-    const data = await response.json();
-    deploymentCache = data.WhisperVault || {};
-    return deploymentCache as Record<string, { address: string; chainId: number; chainName: string }>;
-  } catch (error) {
-    console.error('[WhisperVault] Failed to fetch deployments:', error);
-    return {};
-  }
+  // Deduplicate concurrent requests
+  if (deploymentFetchPromise) return deploymentFetchPromise;
+  
+  deploymentFetchPromise = (async () => {
+    try {
+      const response = await fetch('/deployments.json');
+      const data = await response.json();
+      deploymentCache = data.WhisperVault || {};
+      return deploymentCache as Record<string, { address: string; chainId: number; chainName: string }>;
+    } catch (error) {
+      console.error('[WhisperVault] Failed to fetch deployments:', error);
+      return {};
+    } finally {
+      deploymentFetchPromise = null;
+    }
+  })();
+  
+  return deploymentFetchPromise;
+}
+
+/**
+ * Clear the deployment cache to force a fresh fetch
+ * Useful when deployment addresses change
+ */
+export function clearDeploymentCache(): void {
+  deploymentCache = null;
+  deploymentFetchPromise = null;
 }
 
 // Contract ABI - simplified for core messaging functions
