@@ -10,7 +10,7 @@ import {
   Send,
   RefreshCw,
   Shield,
-  MessageSquare, ShieldAlert,
+  MessageSquare, ShieldAlert, ShieldAlert,
   Eye,
   EyeOff,
   KeyRound,
