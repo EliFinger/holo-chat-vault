@@ -10,7 +10,7 @@ import {
   Send,
   RefreshCw,
   Shield,
-  MessageSquare, ShieldAlert, ShieldAlert,
+  MessageSquare,
   Eye,
   EyeOff,
   KeyRound,
@@ -221,25 +221,25 @@ export default function WhisperChat() {
   return (
     <div className="flex flex-col min-h-screen w-full relative z-10">
       {/* Header */}
-      <header className="glass sticky top-0 z-50 border-b border-cyan-500/20">
+      <header className="glass sticky top-0 z-50 border-b border-sky-300/30">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3">
               <div className="relative w-12 h-12">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-xl opacity-20 blur-lg animate-pulse" />
-                <div className="relative w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-cyan-500/30 flex items-center justify-center glow-cyan">
-                  <MessageSquare className="w-6 h-6 text-cyan-400" />
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-black rounded-full flex items-center justify-center border border-cyan-500/50">
-                    <Lock className="w-2.5 h-2.5 text-cyan-400" />
+                <div className="absolute inset-0 bg-gradient-to-br from-sky-300 to-blue-400 rounded-xl opacity-30 blur-lg animate-pulse" />
+                <div className="relative w-full h-full bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl border border-sky-300/40 flex items-center justify-center glow-cyan">
+                  <MessageSquare className="w-6 h-6 text-sky-500" />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center border border-sky-400/50 shadow-sm">
+                    <Lock className="w-2.5 h-2.5 text-sky-500" />
                   </div>
                 </div>
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-sky-500 via-blue-500 to-sky-400 bg-clip-text text-transparent">
                   WhisperLink
                 </h1>
-                <p className="text-xs text-slate-400">Encrypted Messaging</p>
+                <p className="text-xs text-slate-500">Encrypted Messaging</p>
               </div>
             </div>
 
@@ -247,12 +247,12 @@ export default function WhisperChat() {
             {isAuthenticated && (
               <div className="hidden md:flex items-center gap-6">
                 <div className="flex items-center gap-2 px-4 py-2 glass-card rounded-full">
-                  <Radio className="w-4 h-4 text-green-400 animate-pulse" />
-                  <span className="text-sm text-slate-300">Live</span>
+                  <Radio className="w-4 h-4 text-green-500 animate-pulse" />
+                  <span className="text-sm text-slate-600">Live</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 glass-card rounded-full">
-                  <Shield className="w-4 h-4 text-cyan-400" />
-                  <span className="text-sm text-slate-300">{messages.length} Messages</span>
+                  <Shield className="w-4 h-4 text-sky-500" />
+                  <span className="text-sm text-slate-600">{messages.length} Messages</span>
                 </div>
               </div>
             )}
@@ -276,17 +276,17 @@ export default function WhisperChat() {
               {/* Hero Section */}
               <div className="text-center mb-12">
                 <div className="inline-flex items-center gap-2 px-4 py-2 glass-card rounded-full mb-6">
-                  <Zap className="w-4 h-4 text-cyan-400" />
-                  <span className="text-sm text-cyan-300">Powered by Blockchain Encryption</span>
+                  <Zap className="w-4 h-4 text-sky-500" />
+                  <span className="text-sm text-sky-600">Powered by Blockchain Encryption</span>
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                  <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-sky-500 via-blue-500 to-sky-400 bg-clip-text text-transparent">
                     Private Conversations
                   </span>
                   <br />
-                  <span className="text-white">On The Blockchain</span>
+                  <span className="text-slate-700">On The Blockchain</span>
                 </h1>
-                <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+                <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
                   Your messages are encrypted client-side and stored securely on-chain. 
                   Only you hold the keys to your conversations.
                 </p>
@@ -299,11 +299,11 @@ export default function WhisperChat() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {features.map((feature, i) => (
                   <div key={i} className="glass-card rounded-2xl p-6 text-center hover:glow-cyan transition-all duration-300 group">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <feature.icon className="w-6 h-6 text-cyan-400" />
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-sky-200/50 to-blue-200/50 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <feature.icon className="w-6 h-6 text-sky-500" />
                     </div>
-                    <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-                    <p className="text-sm text-slate-400">{feature.desc}</p>
+                    <h3 className="font-semibold text-slate-700 mb-1">{feature.title}</h3>
+                    <p className="text-sm text-slate-600">{feature.desc}</p>
                   </div>
                 ))}
               </div>
@@ -311,11 +311,11 @@ export default function WhisperChat() {
               {/* Security Badge */}
               <div className="mt-12 flex justify-center">
                 <div className="flex items-center gap-4 px-6 py-3 glass-card rounded-full">
-                  <ShieldCheck className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-slate-300">Military-grade AES-256 encryption</span>
-                  <div className="w-px h-4 bg-slate-600" />
-                  <Lock className="w-5 h-5 text-cyan-400" />
-                  <span className="text-sm text-slate-300">Zero-knowledge architecture</span>
+                  <ShieldCheck className="w-5 h-5 text-green-600" />
+                  <span className="text-sm text-slate-600">Military-grade AES-256 encryption</span>
+                  <div className="w-px h-4 bg-slate-300" />
+                  <Lock className="w-5 h-5 text-sky-500" />
+                  <span className="text-sm text-slate-600">Zero-knowledge architecture</span>
                 </div>
               </div>
             </div>
@@ -326,37 +326,37 @@ export default function WhisperChat() {
             <div className="max-w-md w-full">
               <div className="glass-card rounded-3xl p-8 relative overflow-hidden">
                 {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full blur-2xl" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-500/20 to-transparent rounded-full blur-2xl" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sky-300/30 to-transparent rounded-full blur-2xl" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-300/30 to-transparent rounded-full blur-2xl" />
                 
                 <div className="relative z-10 text-center space-y-6">
                   {/* Animated Lock Icon */}
                   <div className="relative mx-auto w-24 h-24">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full opacity-20 blur-xl animate-pulse" />
-                    <div className="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-pulse-ring" />
-                    <div className="relative w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center border border-cyan-500/50 glow-cyan">
-                      <KeyRound className="w-10 h-10 text-cyan-400" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-sky-300 to-blue-400 rounded-full opacity-30 blur-xl animate-pulse" />
+                    <div className="absolute inset-0 rounded-full border-2 border-sky-400/40 animate-pulse-ring" />
+                    <div className="relative w-full h-full bg-gradient-to-br from-blue-50 to-sky-50 rounded-full flex items-center justify-center border border-sky-400/50 glow-cyan shadow-sm">
+                      <KeyRound className="w-10 h-10 text-sky-500" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold text-white">Unlock Your Vault</h2>
-                    <p className="text-slate-400">
+                    <h2 className="text-2xl font-bold text-slate-700">Unlock Your Vault</h2>
+                    <p className="text-slate-600">
                       Enter your encryption password and sign with your wallet
                     </p>
                   </div>
 
                   {/* Connected Address */}
                   <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-sm text-slate-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-slate-600">
                       {address?.slice(0, 6)}...{address?.slice(-4)}
                     </span>
                   </div>
 
                   {/* Error Display */}
                   {authError && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+                    <div className="p-4 bg-red-100/80 border border-red-300/50 rounded-xl text-red-600 text-sm">
                       {authError}
                     </div>
                   )}
@@ -364,11 +364,11 @@ export default function WhisperChat() {
                   {/* Password Input */}
                   <div className="space-y-4">
                     <div className="relative">
-                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                       <input
                         type={showAuthPassword ? "text" : "password"}
                         placeholder="Enter encryption password..."
-                        className="w-full pl-12 pr-12 py-4 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 input-cyber transition-all"
+                        className="w-full pl-12 pr-12 py-4 bg-white/80 border border-slate-300 rounded-xl text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-sky-400 input-cyber transition-all"
                         value={authPassword}
                         onChange={(e) => setAuthPassword(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && handleAuthenticate()}
@@ -378,7 +378,7 @@ export default function WhisperChat() {
                       <button
                         type="button"
                         onClick={() => setShowAuthPassword(!showAuthPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                       >
                         {showAuthPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -407,7 +407,7 @@ export default function WhisperChat() {
                     <button
                       onClick={handleAuthenticate}
                       disabled={isAuthenticating || !authPassword.trim() || authPassword.length < 6}
-                      className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white font-bold transition-all glow-cyan btn-cyber flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-300 hover:to-blue-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white font-bold transition-all glow-cyan btn-cyber flex items-center justify-center gap-2 shadow-md"
                     >
                       {isAuthenticating ? (
                         <>
@@ -435,42 +435,42 @@ export default function WhisperChat() {
           <div className="h-[calc(100vh-80px)] flex flex-col max-w-4xl mx-auto">
             {/* Error Display */}
             {(error || sendError) && (
-              <div className="mx-4 mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm flex items-center gap-2">
+              <div className="mx-4 mt-4 p-4 bg-red-100/80 border border-red-300/50 rounded-xl text-red-600 text-sm flex items-center gap-2">
                 <Shield className="w-4 h-4" />
                 {error || sendError}
               </div>
             )}
 
             {/* Control Bar */}
-            <div className="p-4 border-b border-slate-700/50">
+            <div className="p-4 border-b border-slate-300/50">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-full">
-                    <Unlock className="w-4 h-4 text-green-400" />
-                    <span className="text-sm text-green-400">Vault Unlocked</span>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-green-100/80 border border-green-300/50 rounded-full">
+                    <Unlock className="w-4 h-4 text-green-600" />
+                    <span className="text-sm text-green-600">Vault Unlocked</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleDecryptAll}
                     disabled={loading || isDecrypting || messages.length === 0}
-                    className="px-4 py-2 glass-card hover:bg-slate-700/50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white text-sm font-medium transition-all flex items-center gap-2"
+                    className="px-4 py-2 glass-card hover:bg-blue-50/80 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-slate-700 text-sm font-medium transition-all flex items-center gap-2"
                   >
                     {isDecrypting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-sky-400/30 border-t-sky-500 rounded-full animate-spin" />
                         <span>Decrypting...</span>
                       </>
                     ) : (
                       <>
-                        <Unlock className="w-4 h-4 text-cyan-400" />
+                        <Unlock className="w-4 h-4 text-sky-500" />
                         <span>Decrypt All</span>
                       </>
                     )}
                   </button>
                   <button
                     onClick={handleLockVault}
-                    className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 text-sm font-medium transition-all flex items-center gap-2"
+                    className="px-4 py-2 bg-red-100/80 hover:bg-red-200/80 border border-red-300/50 rounded-xl text-red-600 text-sm font-medium transition-all flex items-center gap-2"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Lock</span>
@@ -484,16 +484,16 @@ export default function WhisperChat() {
               {messages.length === 0 ? (
                 <div className="h-full flex items-center justify-center">
                   <div className="text-center space-y-4">
-                    <div className="w-20 h-20 mx-auto glass-card rounded-2xl flex items-center justify-center">
-                      <MessageSquare className="w-10 h-10 text-slate-500" />
+                    <div className="w-20 h-20 mx-auto glass-card rounded-2xl flex items-center justify-center shadow-sm">
+                      <MessageSquare className="w-10 h-10 text-slate-400" />
                     </div>
                     <div>
-                      <p className="text-slate-400 font-medium">No messages yet</p>
+                      <p className="text-slate-600 font-medium">No messages yet</p>
                       <p className="text-sm text-slate-500">
                         Send your first encrypted message below
                       </p>
                     </div>
-                    <ChevronDown className="w-6 h-6 text-slate-500 mx-auto animate-bounce" />
+                    <ChevronDown className="w-6 h-6 text-slate-400 mx-auto animate-bounce" />
                   </div>
                 </div>
               ) : (
@@ -503,7 +503,7 @@ export default function WhisperChat() {
                     <button
                       onClick={loadMessages}
                       disabled={loading}
-                      className="px-4 py-2 text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2 glass-card rounded-full"
+                      className="px-4 py-2 text-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center gap-2 glass-card rounded-full"
                     >
                       <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
                       Refresh Messages
@@ -525,36 +525,36 @@ export default function WhisperChat() {
                         <div className="space-y-2">
                           {msg.decryptedText ? (
                             <div className="flex items-start gap-2">
-                              <p className={`text-sm flex-1 ${msg.isResponse ? "text-white" : "text-slate-900"}`}>
+                              <p className={`text-sm flex-1 ${msg.isResponse ? "text-slate-700" : "text-white"}`}>
                                 {msg.decryptedText}
                               </p>
                               <button
                                 onClick={() => handleCopyContent(msg.id, msg.decryptedText || "")}
-                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-white/10 rounded"
+                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-black/5 rounded"
                                 title="Copy message"
                               >
                                 {copiedId === msg.id ? (
-                                  <Check className="w-3.5 h-3.5 text-green-400" />
+                                  <Check className="w-3.5 h-3.5 text-green-600" />
                                 ) : (
-                                  <Copy className={`w-3.5 h-3.5 ${msg.isResponse ? "text-slate-400" : "text-slate-600"}`} />
+                                  <Copy className={`w-3.5 h-3.5 ${msg.isResponse ? "text-slate-500" : "text-white/70"}`} />
                                 )}
                               </button>
                             </div>
                           ) : (
                             <div className="flex items-center gap-2 encrypted-content p-2 rounded-lg">
-                              <Lock className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
-                              <p className="font-mono text-xs text-cyan-300/70 break-all flex-1">
+                              <Lock className="w-3.5 h-3.5 text-sky-500 flex-shrink-0" />
+                              <p className="font-mono text-xs text-sky-600/80 break-all flex-1">
                                 {truncateHex(msg.encryptedContent)}
                               </p>
                               <button
                                 onClick={() => handleCopyContent(msg.id, msg.encryptedContent)}
-                                className="opacity-60 hover:opacity-100 transition-opacity p-1 hover:bg-white/10 rounded flex-shrink-0"
+                                className="opacity-60 hover:opacity-100 transition-opacity p-1 hover:bg-black/5 rounded flex-shrink-0"
                                 title="Copy encrypted content"
                               >
                                 {copiedId === msg.id ? (
-                                  <Check className="w-3.5 h-3.5 text-green-400" />
+                                  <Check className="w-3.5 h-3.5 text-green-600" />
                                 ) : (
-                                  <Copy className="w-3.5 h-3.5 text-cyan-400" />
+                                  <Copy className="w-3.5 h-3.5 text-sky-500" />
                                 )}
                               </button>
                             </div>
@@ -562,7 +562,7 @@ export default function WhisperChat() {
 
                           {/* Message Footer */}
                           <div className={`flex items-center gap-2 text-xs ${
-                            msg.isResponse ? "text-slate-400" : "text-slate-700"
+                            msg.isResponse ? "text-slate-500" : "text-white/80"
                           }`}>
                             <span className="font-medium">{msg.isResponse ? "System" : "You"}</span>
                             <span>·</span>
@@ -570,7 +570,7 @@ export default function WhisperChat() {
                             {msg.decryptedText && (
                               <>
                                 <span>·</span>
-                                <span className="text-green-500 flex items-center gap-1">
+                                <span className="text-green-600 flex items-center gap-1">
                                   <ShieldCheck className="w-3 h-3" />
                                   Decrypted
                                 </span>
@@ -587,26 +587,26 @@ export default function WhisperChat() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-slate-700/50 glass">
+            <div className="p-4 border-t border-slate-300/50 glass">
               <div className="flex items-center gap-3">
                 <div className="flex-1 relative">
                   <input
                     type="text"
                     placeholder="Type your encrypted message..."
-                    className="w-full px-5 py-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 input-cyber transition-all pr-12"
+                    className="w-full px-5 py-4 bg-white/80 border border-slate-300 rounded-2xl text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-sky-400 input-cyber transition-all pr-12"
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
                     disabled={loading}
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                    <Lock className="w-4 h-4 text-cyan-500/50" />
+                    <Lock className="w-4 h-4 text-sky-400/70" />
                   </div>
                 </div>
                 <button
                   onClick={handleSend}
                   disabled={loading || isSending || !messageInput.trim()}
-                  className="p-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-white transition-all glow-cyan btn-cyber"
+                  className="p-4 bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-300 hover:to-blue-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-white transition-all glow-cyan btn-cyber shadow-md"
                 >
                   {(loading || isSending) ? (
                     <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -619,16 +619,16 @@ export default function WhisperChat() {
               {/* Status Bar */}
               <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                   <span>Connected: {address?.slice(0, 6)}...{address?.slice(-4)}</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className={messageInput.length > MAX_MESSAGE_LENGTH ? "text-red-400" : ""}>
+                  <span className={messageInput.length > MAX_MESSAGE_LENGTH ? "text-red-500" : ""}>
                     {messageInput.length}/{MAX_MESSAGE_LENGTH}
                   </span>
-                  <div className="flex items-center gap-1.5 px-2 py-1 bg-cyan-500/10 rounded-full">
-                    <Shield className="w-3 h-3 text-cyan-400" />
-                    <span className="text-cyan-400">E2E Encrypted</span>
+                  <div className="flex items-center gap-1.5 px-2 py-1 bg-sky-100/80 rounded-full">
+                    <Shield className="w-3 h-3 text-sky-500" />
+                    <span className="text-sky-600">E2E Encrypted</span>
                   </div>
                 </div>
               </div>
@@ -638,16 +638,16 @@ export default function WhisperChat() {
       </main>
 
       {/* Footer */}
-      <footer className="glass border-t border-slate-700/50 py-4">
+      <footer className="glass border-t border-slate-300/50 py-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between text-sm text-slate-500">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-cyan-500" />
+              <Shield className="w-4 h-4 text-sky-500" />
               <span>WhisperLink Protocol</span>
             </div>
             <div className="flex items-center gap-4">
               <span>Powered by FHE Technology</span>
-              <div className="w-px h-4 bg-slate-700" />
+              <div className="w-px h-4 bg-slate-300" />
               <span>© 2024</span>
             </div>
           </div>

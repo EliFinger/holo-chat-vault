@@ -71,9 +71,9 @@ export const FHECounterDemo = () => {
   //////////////////////////////////////////////////////////////////////////////
 
   const buttonClass =
-    "inline-flex items-center justify-center rounded-xl bg-black px-4 py-4 font-semibold text-white shadow-sm " +
-    "transition-colors duration-200 hover:bg-blue-700 active:bg-blue-800 " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 " +
+    "inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-sky-400 to-blue-500 px-4 py-4 font-semibold text-white shadow-sm " +
+    "transition-colors duration-200 hover:from-sky-300 hover:to-blue-400 active:from-sky-500 active:to-blue-600 " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 " +
     "disabled:opacity-50 disabled:pointer-events-none";
 
   const titleClass = "font-semibold text-black text-lg mt-4";
@@ -98,7 +98,7 @@ export const FHECounterDemo = () => {
 
   return (
     <div className="grid w-full gap-4">
-      <div className="col-span-full mx-20 bg-black text-white">
+      <div className="col-span-full mx-20 bg-gradient-to-r from-blue-50 to-sky-50 border border-sky-200 rounded-lg text-slate-700">
         <p className="font-semibold  text-3xl m-5">
           FHEVM React Minimal Template -{" "}
           <span className="font-mono font-normal text-gray-400">

@@ -20,7 +20,7 @@ export function errorNotDeployed(chainId: number | undefined) {
           deploy <span className="font-mono bg-white">FHECounter.sol</span> on
           Sepolia, run the following command:
         </p>
-        <p className="font-mono text-2xl leading-relaxed bg-black text-white p-4 mt-12">
+        <p className="font-mono text-2xl leading-relaxed bg-slate-100 text-slate-800 border border-slate-300 rounded-lg p-4 mt-12">
           <span className="opacity-50 italic text-red-500">
             #from &lt;root&gt;/packages/fhevm-hardhat-template
           </span>

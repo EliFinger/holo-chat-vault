@@ -85,6 +85,6 @@ export default {
   },
   plugins: [tailwindcssAnimate, daisyui],
   daisyui: {
-    themes: ["dark"],
+    themes: ["light"],
   },
 } satisfies Config;
